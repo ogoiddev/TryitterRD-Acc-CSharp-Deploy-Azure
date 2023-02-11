@@ -5,7 +5,6 @@ using TryitterRD.Dtos;
 using TryitterRD.Model;
 using TryitterRD.Repository;
 using TryitterRD.Utils;
-using TryitterRD.Controllers;
 
 namespace TryitterRD.Controllers
 {
@@ -27,7 +26,7 @@ namespace TryitterRD.Controllers
         {
             try
             {
-                User user = ReadToken();
+                User user = BaseController.;
 
                 return Ok(user);
             }
@@ -41,8 +40,9 @@ namespace TryitterRD.Controllers
                 });
             }
             
-        }
-        [HttpPost]
+        }    
+
+    [HttpPost]
         [AllowAnonymous]
         public IActionResult PostUser([FromBody] User user)
         {
