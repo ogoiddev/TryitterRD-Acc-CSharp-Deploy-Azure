@@ -17,7 +17,7 @@ namespace TryitterRD.Controllers
             _userRepository = userRepository;
         }
 
-        protected User ReadToken(string token)
+        public User ReadToken(string token)
         {
             var userId = User.Claims.Where(claim => claim.Type == ClaimTypes.Sid).Select(claim => claim.Value).FirstOrDefault();
 

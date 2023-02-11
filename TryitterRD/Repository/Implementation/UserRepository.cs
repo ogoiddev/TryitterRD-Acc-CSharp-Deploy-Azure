@@ -4,8 +4,8 @@ namespace TryitterRD.Repository.Implementation
 {
     public class UserRepository : IUserRepository
     {
-        private readonly TryitterContext _context;
-        public UserRepository(TryitterContext context)
+        private readonly TryitterRDContext _context;
+        public UserRepository(TryitterRDContext context)
         {
             _context = context;
         }

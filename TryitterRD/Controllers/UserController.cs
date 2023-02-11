@@ -26,7 +26,7 @@ namespace TryitterRD.Controllers
         {
             try
             {
-                User user = BaseController.;
+                User user = ReadToken();
 
                 return Ok(user);
             }
