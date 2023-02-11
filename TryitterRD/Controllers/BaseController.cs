@@ -1,7 +1,6 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using TryitterRD.Controllers;
 using TryitterRD.Model;
 using TryitterRD.Repository;
 
@@ -10,24 +9,24 @@ namespace TryitterRD.Controllers
     [Authorize]
     public class BaseController : ControllerBase
     {
-        private readonly IUserRepository _userRepository;
+        protected readonly IUserRepository _userRepository;
 
-        public BaseController(ILogger<LoginController> logger, IUserRepository userRepository)
+        public BaseController(IUserRepository userRepository)
         {
             _userRepository = userRepository;
         }
 
-        public User ReadToken(string token)
+        protected User? ReadToken()
         {
-            var userId = User.Claims.Where(claim => claim.Type == ClaimTypes.Sid).Select(claim => claim.Value).FirstOrDefault();
+            var userSidId = User.Claims.Where(claim => claim.Type == ClaimTypes.Sid).Select(claim => claim.Value).FirstOrDefault();
 
-            if (string.IsNullOrEmpty(userId))
+            if (string.IsNullOrEmpty(userSidId))
             {
                 return null;
             }
             else
             {
-                return _userRepository.GetUserById(int.Parse(userId));
+                return _userRepository.GetUserById(int.Parse(userSidId));
             }
         }
     }

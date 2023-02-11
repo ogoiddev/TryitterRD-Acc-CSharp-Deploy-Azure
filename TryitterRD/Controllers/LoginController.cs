@@ -1,12 +1,11 @@
 
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
 using TryitterRD.Dtos;
 using TryitterRD.Model;
 using TryitterRD.Repository;
 using TryitterRD.Utils;
-// using TryitterRD.Controllers;
 using TryitterRD.Services;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace TryitterRD.Controllers
 {
@@ -14,13 +13,11 @@ namespace TryitterRD.Controllers
     [Route("api/[controller]")]
     public class LoginController : BaseController
     {
-        public readonly ILogger<LoginController> _logger;
-        private readonly IUserRepository _userRepository;
+        private readonly ILogger<LoginController> _logger;
 
-        public LoginController(ILogger<LoginController> logger, IUserRepository userRepository)
+        public LoginController(ILogger<LoginController> logger, IUserRepository userRepository) : base(userRepository)
         {
             _logger = logger;
-            _userRepository = userRepository;
         }
 
         [HttpPost]
@@ -32,7 +29,7 @@ namespace TryitterRD.Controllers
                 if (!String.IsNullOrEmpty(loginRequest.Password) && !String.IsNullOrEmpty(loginRequest.Email) &&
                     !String.IsNullOrWhiteSpace(loginRequest.Password) && !String.IsNullOrWhiteSpace(loginRequest.Email))
                 {
-                    User user = _userRepository.GetUserByLoginDTO(loginRequest.Email, MD5Crypt.GenerateHashMD5(loginRequest.Password));
+                    User user = _userRepository.GetUserByLoginDTO(loginRequest.Email.ToLower(), MD5Crypt.GenerateHashMD5(loginRequest.Password));
 
                     if(user != null)
                     {

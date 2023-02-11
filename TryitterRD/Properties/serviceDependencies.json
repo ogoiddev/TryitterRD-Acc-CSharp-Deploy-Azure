@@ -2,7 +2,7 @@
   "dependencies": {
     "mssql1": {
       "type": "mssql",
-      "connectionId": "ConnectionStrings:Server=DESKTOP-P9CCNOQ::ogoiddev;Database=myDataBase;UserId=sa;Password=33#058624;TrustServerCertificate=True"
+      "connectionId": "ConnectionStrings:Server=DESKTOP-P9CCNOQ::ogoiddev;Database=myDataBase;Id=sa;Password=33#058624;TrustServerCertificate=True"
     }
   }
 }

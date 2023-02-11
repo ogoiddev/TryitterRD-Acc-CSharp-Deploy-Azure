@@ -13,12 +13,10 @@ namespace TryitterRD.Controllers
     public class UserController : BaseController
     {
         public readonly ILogger<UserController> _logger;
-        public readonly IUserRepository _userRepository;
 
-        public UserController(ILogger<UserController> logger, IUserRepository userRepository)
+        public UserController(ILogger<UserController> logger, IUserRepository userRepository) : base(userRepository)
         {
             _logger = logger;
-            _userRepository = userRepository;
         }
 
         [HttpGet]
@@ -28,7 +26,10 @@ namespace TryitterRD.Controllers
             {
                 User user = ReadToken();
 
-                return Ok(user);
+                return Ok(new UserResponseDTO{
+                    Name = user.Name,
+                    Email = user.Email,
+                });
             }
             catch (Exception ex)
             {
@@ -42,7 +43,7 @@ namespace TryitterRD.Controllers
             
         }    
 
-    [HttpPost]
+        [HttpPost]
         [AllowAnonymous]
         public IActionResult PostUser([FromBody] User user)
         {

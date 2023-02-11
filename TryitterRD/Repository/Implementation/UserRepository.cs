@@ -26,9 +26,9 @@ namespace TryitterRD.Repository.Implementation
             return _context.Users.FirstOrDefault(user => user.Email == email && user.Password == password);
         }
 
-        public User GetUserById(int id)
+        public User GetUserById(int userId)
         {
-            return _context.Users.FirstOrDefault(user => user.UserId == id);
+            return _context.Users.FirstOrDefault(user => user.UserId == userId);
         }
     }
 }
