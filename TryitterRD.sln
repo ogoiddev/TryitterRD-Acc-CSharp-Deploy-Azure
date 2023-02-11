@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33122.133
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TryitterRD", "TryitterRD\TryitterRD.csproj", "{C92B27B9-ACC9-423E-8123-28A1FDD65E88}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TryitterRD.Test", "TryitterRD.Test\TryitterRD.Test.csproj", "{5D8B124A-DB43-43D4-AD58-D853B8B6A631}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C92B27B9-ACC9-423E-8123-28A1FDD65E88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C92B27B9-ACC9-423E-8123-28A1FDD65E88}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C92B27B9-ACC9-423E-8123-28A1FDD65E88}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C92B27B9-ACC9-423E-8123-28A1FDD65E88}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D8B124A-DB43-43D4-AD58-D853B8B6A631}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D8B124A-DB43-43D4-AD58-D853B8B6A631}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D8B124A-DB43-43D4-AD58-D853B8B6A631}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D8B124A-DB43-43D4-AD58-D853B8B6A631}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BB6E8F42-E48E-4491-9062-042FE81F1FA7}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "mssql1": {
+      "secretStore": "AzureAppSettings",
+      "type": "mssql.onprem",
+      "connectionId": "ConnectionStrings:Server=DESKTOP-P9CCNOQ::ogoiddev;Database=myDataBase;UserId=sa;Password=33#058624;TrustServerCertificate=True"
+    }
+  }
+}
