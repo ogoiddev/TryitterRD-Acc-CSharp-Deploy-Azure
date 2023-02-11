@@ -6,7 +6,7 @@ using TryitterRD.Model;
 
 namespace TryitterRD.Services
 {
-    public class TokenServices
+    public class TokenService
     {
         public static string GenerateToken(User user)
         {

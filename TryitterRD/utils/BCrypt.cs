@@ -1,7 +1,7 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
 
-namespace DevariaCsharp_ogoiddev.Utils
+namespace TryitterRD.Utils
 {
     public class MD5Crypt
     {
