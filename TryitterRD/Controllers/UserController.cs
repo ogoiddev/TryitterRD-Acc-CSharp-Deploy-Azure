@@ -47,7 +47,7 @@ namespace TryitterRD.Controllers
 
                 if (user == null) throw new Exception();
                 
-                _userRepository.Delete(user);
+                _userRepository.Delete(user.UserId);
 
                 return Ok(new UserResponseDTO
                 {

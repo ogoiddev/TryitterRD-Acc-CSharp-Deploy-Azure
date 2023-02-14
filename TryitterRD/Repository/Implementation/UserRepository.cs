@@ -1,5 +1,4 @@
 ﻿using TryitterRD.Model;
-using System.Linq;
 
 namespace TryitterRD.Repository.Implementation
 {
@@ -33,9 +32,13 @@ namespace TryitterRD.Repository.Implementation
             return _context.Users.FirstOrDefault(user => user.UserId == userId);
         }
 
-        public void Delete(User user)
+        public void Delete(int id)
         {
-            _context.Users.Remove(user);
+            var userToDelete = _context.Users.FirstOrDefault(userData => userData.UserId == id);
+
+            if (userToDelete == null) throw new Exception();
+
+            _context.Users.Remove(userToDelete);
             _context.SaveChanges();
         }
 

@@ -1,0 +1,11 @@
+﻿using TryitterRD.Model;
+
+namespace TryitterRD.Repository
+{
+    public interface IPostRepository
+    {
+        public void Save(Post post);
+        public void Delete(int id);
+        public void Update(Post post, int id);
+    }
+}
