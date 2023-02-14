@@ -2,33 +2,44 @@
 
 namespace TryitterRD.Repository.Implementation
 {
-  public class UserRepository : IUserRepository
-  {
-    private readonly TryitterRDContext _context;
-    public UserRepository(TryitterRDContext context)
+    public class UserRepository : IUserRepository
     {
-      _context = context;
-    }
+        private readonly TryitterRDContext _context;
 
-    public void Save(User user)
-    {
-      _context.Add(user);
-      _context.SaveChanges();
-    }
+        public UserRepository(TryitterRDContext context)
+        {
+            _context = context;
+        }
 
-    public bool CheckByEmail(string email)
-    {
-      return _context.Users.Any(user => user.Email.ToLower() == email.ToLower());
-    }
+        public void Save(User user)
+        {
+            _context.Add(user);
+            _context.SaveChanges();
+        }
 
-    public User GetUserByLoginDTO(string email, object password)
-    {
-      return _context.Users.FirstOrDefault(user => user.Email == email && user.Password == password);
-    }
+        public bool CheckByEmail(string email)
+        {
+            return _context.Users.Any(user => user.Email.ToLower() == email.ToLower());
+        }
 
-    public User GetUserById(int userId)
-    {
-      return _context.Users.FirstOrDefault(user => user.UserId == userId);
+        public User GetUserByLoginDTO(string email, object password)
+        {
+            return _context.Users.FirstOrDefault(user => user.Email == email && user.Password == password);
+        }
+
+        public User GetUserById(int userId)
+        {
+            return _context.Users.FirstOrDefault(user => user.UserId == userId);
+        }
+
+        public void Delete(User user)
+        {
+            _context.Users.Remove(user);
+        }
+
+        public void Update(User user)
+        {
+            _context.Users.Update(user);
+        }
     }
-  }
 }
