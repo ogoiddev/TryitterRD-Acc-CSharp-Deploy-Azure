@@ -8,103 +8,97 @@ using TryitterRD.Utils;
 
 namespace TryitterRD.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class UserController : BaseController
+  [ApiController]
+  [Route("api/[controller]")]
+  public class UserController : BaseController
+  {
+
+    public UserController(IUserRepository userRepository) : base(userRepository)
     {
-        public readonly ILogger<UserController> _logger;
 
-        public UserController(ILogger<UserController> logger, IUserRepository userRepository) : base(userRepository)
-        {
-            _logger = logger;
-        }
-
-        [HttpGet]
-        public IActionResult GetUser()
-        {
-            try
-            {
-                User user = ReadToken();
-
-                return Ok(new UserResponseDTO{
-                    Name = user.Name,
-                    Email = user.Email,
-                });
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError("Erro Login wrong");
-                return StatusCode(StatusCodes.Status404NotFound, new ErrorResponseDTO()
-                {
-                    Description = ex.Message,
-                    Status = StatusCodes.Status404NotFound
-                });
-            }
-            
-        }    
-
-        [HttpPost]
-        [AllowAnonymous]
-        public IActionResult PostUser([FromBody] User user)
-        {
-            try
-            {
-                if (user != null)
-                {
-                    var errors = new List<string>();
-
-                    if(string.IsNullOrEmpty(user.Name) || string.IsNullOrWhiteSpace(user.Name))
-                    {
-                        errors.Add("Invalid Name");
-                    }
-                    if (string.IsNullOrEmpty(user.Email) || string.IsNullOrWhiteSpace(user.Email) || !user.Email.Contains("@"))
-                    {
-                        errors.Add("Invalid Email");
-                    }
-                    if (string.IsNullOrEmpty(user.Password) || string.IsNullOrWhiteSpace(user.Password))
-                    {
-                        errors.Add("Invalid Password");
-                    }
-
-                    if (errors.Count > 0)
-                    {
-                        return BadRequest(new ErrorResponseDTO()
-                        {
-                            Errors = errors,
-                            Status = StatusCodes.Status400BadRequest
-                        });
-                    }
-
-                    if (!_userRepository.CheckByEmail(user.Email))
-                    {
-                        _userRepository.Save(user);
-                    }
-                    else
-                    {
-                        return BadRequest(new ErrorResponseDTO()
-                        {
-                            Description = "User already exist",
-                            Status = StatusCodes.Status400BadRequest
-                        });
-                    }
-
-                    user.Password = MD5Crypt.GenerateHashMD5(user.Password);
-                }
-
-                user.Password = "Usuario salvo com sucesso";
-                return Ok(user);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError("Erro ao salvar new User");
-                return StatusCode(StatusCodes.Status404NotFound, new ErrorResponseDTO()
-                {
-                    Description = "Ocorreu um erro:" + ex.Message,
-                    Status = StatusCodes.Status404NotFound
-                });
-
-            }
-        }
     }
+
+    [HttpGet]
+    public IActionResult GetUser()
+    {
+      try
+      {
+        User user = ReadToken();
+
+        return Ok(new UserResponseDTO
+        {
+          Name = user.Name,
+          Email = user.Email,
+        });
+      }
+      catch
+      {
+        return StatusCode(StatusCodes.Status404NotFound);
+      }
+
+    }
+
+    [HttpPost]
+    [AllowAnonymous]
+    public IActionResult PostUser([FromBody] User user)
+    {
+      try
+      {
+        if (user != null)
+        {
+          var errors = new List<string>();
+
+          if (string.IsNullOrEmpty(user.Name) || string.IsNullOrWhiteSpace(user.Name))
+          {
+            errors.Add("Invalid Name");
+          }
+          if (string.IsNullOrEmpty(user.Email) || string.IsNullOrWhiteSpace(user.Email) || !user.Email.Contains("@"))
+          {
+            errors.Add("Invalid Email");
+          }
+          if (string.IsNullOrEmpty(user.Password) || string.IsNullOrWhiteSpace(user.Password))
+          {
+            errors.Add("Invalid Password");
+          }
+
+          if (errors.Count > 0)
+          {
+            return BadRequest(new ErrorResponseDTO()
+            {
+              Errors = errors,
+              Status = StatusCodes.Status400BadRequest
+            });
+          }
+
+          if (!_userRepository.CheckByEmail(user.Email))
+          {
+            _userRepository.Save(user);
+          }
+          else
+          {
+            return BadRequest(new ErrorResponseDTO()
+            {
+              Description = "User already exist",
+              Status = StatusCodes.Status400BadRequest
+            });
+          }
+
+          user.Password = MD5Crypt.GenerateHashMD5(user.Password);
+        }
+
+        user.Password = "Usuario salvo com sucesso";
+        return Ok(user);
+      }
+      catch
+      {
+        return StatusCode(StatusCodes.Status404NotFound, new ErrorResponseDTO()
+        {
+          Description = "Ocorreu um erro:",
+          Status = StatusCodes.Status404NotFound
+        });
+
+      }
+    }
+  }
 
 }
