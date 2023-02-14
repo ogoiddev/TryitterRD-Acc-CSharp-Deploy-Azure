@@ -68,6 +68,46 @@ namespace TryitterRD.Controllers
             }
         }
 
+        [HttpPut]
+        public IActionResult UpdateUser([FromBody] User user)
+        {
+            try
+            {
+                var getId = ReadToken();
+                
+                if (user.Email == null || getId == null) throw new Exception();
+
+                user.Password = MD5Crypt.GenerateHashMD5(user.Password);
+
+                User userToUpdate = new()
+                {
+                    Name = user.Name,
+                    Email = user.Email,
+                    Password = user.Password,
+                    Status = "online"
+                };
+
+                _userRepository.Update(userToUpdate, getId.UserId);
+
+                return Ok(new UserResponseDTO
+                {
+                    Name = userToUpdate.Name,
+                    Email = userToUpdate.Email,
+                    Status = "Usuario alterado",
+                });
+
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(StatusCodes.Status404NotFound, new ErrorResponseDTO()
+                {
+                    Description = "Ocorreu um erro - Usuario nao alterado" + ex,
+                    Status = StatusCodes.Status404NotFound
+                });
+
+            }
+        }
+
 
         [HttpPost]
         [AllowAnonymous]

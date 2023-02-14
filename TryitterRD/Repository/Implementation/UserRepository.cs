@@ -1,4 +1,5 @@
 ﻿using TryitterRD.Model;
+using System.Linq;
 
 namespace TryitterRD.Repository.Implementation
 {
@@ -35,11 +36,20 @@ namespace TryitterRD.Repository.Implementation
         public void Delete(User user)
         {
             _context.Users.Remove(user);
+            _context.SaveChanges();
         }
 
-        public void Update(User user)
+        public void Update(User user, int id)
         {
-            _context.Users.Update(user);
+            var userToUpdate = _context.Users.FirstOrDefault(userData => userData.UserId == id);
+
+            if (userToUpdate == null) throw new Exception();
+
+            userToUpdate.Name = user.Name;
+            userToUpdate.Email = user.Email;
+            userToUpdate.Password = user.Password;
+
+            _context.SaveChanges();
         }
     }
 }

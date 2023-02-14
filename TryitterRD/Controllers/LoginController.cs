@@ -9,64 +9,68 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace TryitterRD.Controllers
 {
-  [ApiController]
-  [Route("api/[controller]")]
-  public class LoginController : BaseController
-  {
-
-    public LoginController(IUserRepository userRepository) : base(userRepository)
+    [ApiController]
+    [Route("api/[controller]")]
+    public class LoginController : BaseController
     {
-
-    }
-
-    [HttpPost]
-    [AllowAnonymous]
-    public IActionResult Login([FromBody] LoginDTO loginRequest)
-    {
-      try
-      {
-        if (!string.IsNullOrEmpty(loginRequest.Password) && !string.IsNullOrEmpty(loginRequest.Email) &&
-            !string.IsNullOrWhiteSpace(loginRequest.Password) && !string.IsNullOrWhiteSpace(loginRequest.Email))
+        public LoginController(IUserRepository userRepository) : base(userRepository)
         {
-          User user = _userRepository.GetUserByLoginDTO(loginRequest.Email, MD5Crypt.GenerateHashMD5(loginRequest.Password));
-
-          if (user != null)
-          {
-            return Ok(new LoginResponseDTO()
-            {
-              Email = user.Email,
-              Name = user.Name,
-              Token = TokenService.GenerateToken(user)
-            });
-
-          }
-          else
-          {
-            return BadRequest(new ErrorResponseDTO()
-            {
-              Description = "Wrong data, check your Password or Email",
-              Status = StatusCodes.Status500InternalServerError
-            });
-          }
 
         }
-        else
+
+        [HttpPost]
+        [AllowAnonymous]
+        public IActionResult Login([FromBody] LoginDTO loginRequest)
         {
-          return BadRequest(new ErrorResponseDTO()
-          {
-            Description = "Form fill is empty or null",
-            Status = StatusCodes.Status500InternalServerError
-          });
+            try
+            {
+                if (!string.IsNullOrEmpty(loginRequest.Password) && !string.IsNullOrEmpty(loginRequest.Email) &&
+                !string.IsNullOrWhiteSpace(loginRequest.Password) && !string.IsNullOrWhiteSpace(loginRequest.Email))
+                {
+                    User user = _userRepository.GetUserByLoginDTO(loginRequest.Email, MD5Crypt.GenerateHashMD5(loginRequest.Password));
+                    if (user != null)
+                    {
+                        User userStatus = new() 
+                        { 
+                            Name = user.Name, 
+                            Email = user.Email,
+                            Password = user.Password,
+                            Status = "online" 
+                        };
+
+                        _userRepository.Update(userStatus, user.UserId);
+
+
+                        return Ok(new LoginResponseDTO()
+                        {
+                            Email = user.Email,
+                            Name = user.Name,
+                            Token = TokenService.GenerateToken(user)
+                        });
+
+                    }
+                    else
+                    {
+                        return BadRequest(new ErrorResponseDTO()
+                        {
+                            Description = "Wrong data, check your Password or Email",
+                            Status = StatusCodes.Status500InternalServerError
+                        });
+                    }
+
+                }
+
+                return Ok(loginRequest);
+
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResponseDTO()
+                {
+                    Description = "Login error alert",
+                    Status = StatusCodes.Status500InternalServerError
+                });
+            }
         }
-      }
-      catch
-      {
-        return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResponseDTO()
-        {
-          Description = "Login error alert",
-          Status = StatusCodes.Status500InternalServerError
-        });
-      }
     }
-  }
 }

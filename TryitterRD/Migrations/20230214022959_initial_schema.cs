@@ -4,7 +4,7 @@
 
 namespace TryitterRD.Migrations
 {
-    public partial class InitialSchema : Migration
+    public partial class initial_schema : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
