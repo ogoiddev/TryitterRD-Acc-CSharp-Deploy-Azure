@@ -11,7 +11,7 @@ using TryitterRD.Model;
 namespace TryitterRD.Migrations
 {
     [DbContext(typeof(TryitterRDContext))]
-    [Migration("20230214022959_initial_schema")]
+    [Migration("20230216000533_initial_schema")]
     partial class initial_schema
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

@@ -6,15 +6,27 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using System.Text.Json.Serialization;
+using System.Text.Json;
+
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
+
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<TryitterRDContext>(option => option.UseSqlServer(connectionString));
-builder.Services.AddScoped<IUserRepository, UserRepository>();
+
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+    options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+});
+
 var cryptKey = Encoding.ASCII.GetBytes(JWTSecretKey.JwtSecretKey);
 builder.Services.AddAuthentication(auth =>
 {
@@ -33,6 +45,7 @@ builder.Services.AddAuthentication(auth =>
   };
 });
 var app = builder.Build();
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

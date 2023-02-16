@@ -51,6 +51,7 @@ namespace TryitterRD.Repository.Implementation
             userToUpdate.Name = user.Name;
             userToUpdate.Email = user.Email;
             userToUpdate.Password = user.Password;
+            userToUpdate.Status = user.Status;
 
             _context.SaveChanges();
         }
