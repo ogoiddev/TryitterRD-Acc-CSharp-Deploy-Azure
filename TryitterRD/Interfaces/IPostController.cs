@@ -8,6 +8,9 @@ namespace TryitterRD.Interfaces
         [HttpPost]
         IActionResult PostPost([FromBody] Post post);
 
+        [HttpGet]
+        IActionResult GetPost([FromBody] int id);
+
     }
 
 }

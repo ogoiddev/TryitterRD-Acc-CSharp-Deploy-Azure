@@ -6,7 +6,6 @@ using TryitterRD.Interfaces;
 using TryitterRD.Model;
 using TryitterRD.Repository;
 using System.Security.Claims;
-using TryitterRD.Repository.Implementation;
 
 namespace TryitterRD.Controllers
 {
@@ -39,7 +38,7 @@ namespace TryitterRD.Controllers
         }
 
         [HttpPost]
-        public IActionResult PostPost([FromBody] Post post) 
+        public IActionResult PostPost([FromBody] Post post)
         {
             var userChecked = ReadToken();
 
@@ -73,5 +72,65 @@ namespace TryitterRD.Controllers
             return Ok(post);
         }
 
+        [HttpGet("{id}")]
+        public IActionResult GetPost(int id)
+        {
+            var post = _postRepository.GetPostById(id);
+
+            if (post == null)
+            {
+                return NotFound(new ErrorResponseDTO()
+                {
+                    Description = "Post not found",
+                    Status = StatusCodes.Status404NotFound
+                });
+            }
+
+            return Ok(post);
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult UpdatePost([FromBody] Post post)
+        {
+            var userChecked = ReadToken();
+
+            if (post == null || userChecked == null || string.IsNullOrWhiteSpace(post.Title) || string.IsNullOrEmpty(post.Title)
+                || string.IsNullOrWhiteSpace(post.Content) || string.IsNullOrEmpty(post.Content))
+            {
+                return BadRequest(new ErrorResponseDTO()
+                {
+                    Description = "User wrong or Body wrong params",
+                    Status = StatusCodes.Status400BadRequest
+                });
+            }
+
+            var postToUpdate = _postRepository.GetPostById(userChecked.UserId);
+
+            if (postToUpdate == null)
+            {
+                return NotFound(new ErrorResponseDTO()
+                {
+                    Description = "Post not found",
+                    Status = StatusCodes.Status404NotFound
+                });
+            }
+
+            if (postToUpdate.UserId != userChecked.UserId)
+            {
+                return Unauthorized(new ErrorResponseDTO()
+                {
+                    Description = "User unauthorized to update this post",
+                    Status = StatusCodes.Status401Unauthorized
+                });
+            }
+
+            postToUpdate.Content = post.Content;
+            postToUpdate.Title = post.Title;
+
+            _postRepository.Save(postToUpdate);
+
+            return Ok(postToUpdate);
+
+        }
     }
 }

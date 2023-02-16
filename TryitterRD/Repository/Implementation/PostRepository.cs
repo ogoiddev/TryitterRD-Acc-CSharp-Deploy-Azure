@@ -18,6 +18,11 @@ namespace TryitterRD.Repository.Implementation
             _context.SaveChanges();
         }
 
+        public Post GetPostById(int postId)
+        {
+            return _context.Posts.FirstOrDefault(post => post.PostId == postId);
+        }
+
         void IPostRepository.Delete(int id)
         {
             var postToDelete = _context.Posts.FirstOrDefault(postData => postData.UserId == id);
