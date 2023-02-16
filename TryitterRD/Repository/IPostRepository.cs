@@ -7,6 +7,6 @@ namespace TryitterRD.Repository
         public void Save(Post post);
         public Post GetPostById(int id);
         public void Delete(int id);
-        public void Update(Post post, int id);
+        public void Update(Post post);
     }
 }

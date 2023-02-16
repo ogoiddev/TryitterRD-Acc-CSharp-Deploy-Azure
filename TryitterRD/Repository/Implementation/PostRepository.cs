@@ -33,16 +33,9 @@ namespace TryitterRD.Repository.Implementation
             _context.SaveChanges();
         }
 
-        void IPostRepository.Update(Post post, int id)
+        void IPostRepository.Update(Post post)
         {
-            var postToUpdate = _context.Posts.FirstOrDefault(postData => postData.UserId == id);
-
-            if (postToUpdate == null) throw new Exception();
-
-            postToUpdate.Title = post.Title;
-            postToUpdate.Content = post.Content;
-            postToUpdate.UserId = id;
-
+            _context.Posts.Update(post);
             _context.SaveChanges();
         }
     }

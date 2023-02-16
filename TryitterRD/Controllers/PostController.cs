@@ -89,7 +89,7 @@ namespace TryitterRD.Controllers
             return Ok(post);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut]
         public IActionResult UpdatePost([FromBody] Post post)
         {
             var userChecked = ReadToken();
@@ -127,9 +127,17 @@ namespace TryitterRD.Controllers
             postToUpdate.Content = post.Content;
             postToUpdate.Title = post.Title;
 
-            _postRepository.Save(postToUpdate);
+            _postRepository.Update(postToUpdate);
 
-            return Ok(postToUpdate);
+            var options = new JsonSerializerOptions
+            {
+                ReferenceHandler = ReferenceHandler.Preserve,
+                WriteIndented = true,
+            };
+
+            var json = JsonSerializer.Serialize(postToUpdate, options);
+
+            return Ok(json.ToString());
 
         }
     }
