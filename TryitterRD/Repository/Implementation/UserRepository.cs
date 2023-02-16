@@ -4,8 +4,9 @@ namespace TryitterRD.Repository.Implementation
 {
     public class UserRepository : IUserRepository
     {
-        private readonly TryitterContext _context;
-        public UserRepository(TryitterContext context)
+        private readonly TryitterRDContext _context;
+
+        public UserRepository(TryitterRDContext context)
         {
             _context = context;
         }
@@ -26,9 +27,33 @@ namespace TryitterRD.Repository.Implementation
             return _context.Users.FirstOrDefault(user => user.Email == email && user.Password == password);
         }
 
-        public User GetUserById(int id)
+        public User GetUserById(int userId)
         {
-            return _context.Users.FirstOrDefault(user => user.UserId == id);
+            return _context.Users.FirstOrDefault(user => user.UserId == userId);
+        }
+
+        public void Delete(int id)
+        {
+            var userToDelete = _context.Users.FirstOrDefault(userData => userData.UserId == id);
+
+            if (userToDelete == null) throw new Exception();
+
+            _context.Users.Remove(userToDelete);
+            _context.SaveChanges();
+        }
+
+        public void Update(User user, int id)
+        {
+            var userToUpdate = _context.Users.FirstOrDefault(userData => userData.UserId == id);
+
+            if (userToUpdate == null) throw new Exception();
+
+            userToUpdate.Name = user.Name;
+            userToUpdate.Email = user.Email;
+            userToUpdate.Password = user.Password;
+            userToUpdate.Status = user.Status;
+
+            _context.SaveChanges();
         }
     }
 }

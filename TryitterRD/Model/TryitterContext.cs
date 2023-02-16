@@ -2,14 +2,14 @@
 
 namespace TryitterRD.Model
 {
-    public class TryitterContext : DbContext
+  public class TryitterRDContext : DbContext
+  {
+    public TryitterRDContext(DbContextOptions<TryitterRDContext> option) : base(option)
     {
-        public TryitterContext(DbContextOptions<TryitterContext> option) : base(option)
-        {
-
-        }
-
-        public DbSet<User> Users { get; set; }
 
     }
+
+    public DbSet<User> Users { get; set; }
+    public DbSet<Post> Posts { get; set; }
+  }
 }
