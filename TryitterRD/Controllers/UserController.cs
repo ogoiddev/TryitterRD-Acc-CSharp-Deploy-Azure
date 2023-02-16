@@ -28,7 +28,7 @@ namespace TryitterRD.Controllers
                 return Ok(new UserResponseDTO
                 {
                       Name = user.Name,
-                      Email = user.Email,
+                      Email = user.Email
                 });
               }
               catch
