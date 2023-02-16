@@ -70,11 +70,6 @@ Para que seja possível instalar o TryitterRD na sua máquina em modo de desenvo
   
 </details>
 
-<details>
-  <summary><strong>Conectando ao Banco de Dados SQL</strong></summary><br/>
-
-  Em construção...
-
 </details>
 
 <details>
@@ -87,8 +82,20 @@ Para que seja possível instalar o TryitterRD na sua máquina em modo de desenvo
 </details>
 
 <details>
-  <summary><strong>Tipos de requisição da API e como utilizar</strong></summary><br />
+  <summary><strong>Tipos de requisição da API</strong></summary><br />
   
-  Em construção...
+  - POST /Login - ENDPOINT para realizar o login do usuário no Tryitter.
+  
+  
+  
+  - GET /api/User/{id} - ENPOINT para buscar por um usuário específico do Tryitter.
+  - DELETE /api/User - ENPOINT para deletar a conta do usuário do Tryitter.
+  - PUT /api/User - ENPOINT para realizar alterações na conta do usuário Tryitter.
+  - POST /api/User - ENPOINT para criar um novo usuário no Tryitter.
+  
+  - POST /api/Post - ENDPOINT para que um usuário cadastrado consiga realizar uma postagem no Tryitter.
+  - GET /api/Post/{id} - ENDPOINT permite busca por postagens realizadas por um determinado usuário.
+  - PUT /api/Post/{id} - ENDPOINT permite usuário modificar ou atualizar uma postagem já realizada.
+  - DELETE /api/Post/{id} - ENDPOINT permite usuário deletar postagens já realizadas anteriormente.
   
 </details>
