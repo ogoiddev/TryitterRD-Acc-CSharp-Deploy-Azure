@@ -37,7 +37,7 @@
 			"response": []
 		},
 		{
-			"name": "Post Login",
+			"name": "Login",
 			"request": {
 				"method": "GET",
 				"header": []
@@ -53,7 +53,7 @@
 			"response": []
 		},
 		{
-			"name": "Put User",
+			"name": "Update User",
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -131,7 +131,89 @@
 			"response": []
 		},
 		{
-			"name": "Get User",
+			"name": "Get Post By Id",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9zaWQiOiI4IiwibmFtZSI6IkRpb2dvIiwibmJmIjoxNjc2NTEwMzA5LCJleHAiOjE2NzY1MTM5MDksImlhdCI6MTY3NjUxMDMwOX0.LPZ8WbTAiOR9k15Mzq_GX3B0-G3HOeXrPB_wLIH8-e0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7144/api/Post/1",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7144",
+					"path": [
+						"api",
+						"Post",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Post",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9zaWQiOiI4IiwibmFtZSI6IkRpb2dvIiwibmJmIjoxNjc2NTEwMzA5LCJleHAiOjE2NzY1MTM5MDksImlhdCI6MTY3NjUxMDMwOX0.LPZ8WbTAiOR9k15Mzq_GX3B0-G3HOeXrPB_wLIH8-e0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"title\": \"string2\",\r\n  \"content\": \"string2\",\r\n  \"User\": {\r\n    \"name\": \"Diogo\",\r\n    \"email\": \"ogoiddev@gmail.com\",\r\n    \"password\": \"123456\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7144/api/Post",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7144",
+					"path": [
+						"api",
+						"Post"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User By Token",
 			"request": {
 				"method": "GET",
 				"header": []
