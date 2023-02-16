@@ -9,7 +9,14 @@ namespace TryitterRD.Interfaces
         IActionResult PostPost([FromBody] Post post);
 
         [HttpGet]
-        IActionResult GetPost([FromBody] int id);
+        IActionResult GetPostById(int id);
+
+
+        [HttpPut]
+        IActionResult UpdatePost([FromBody] Post post, int id);
+        
+        [HttpDelete]
+        IActionResult DeletePost(int id);
 
     }
 

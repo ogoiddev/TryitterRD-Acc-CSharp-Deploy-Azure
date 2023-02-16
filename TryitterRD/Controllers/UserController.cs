@@ -1,6 +1,7 @@
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using TryitterRD.Dtos;
 using TryitterRD.Model;
 using TryitterRD.Repository;
@@ -18,17 +19,20 @@ namespace TryitterRD.Controllers
 
     }
 
-        [HttpGet]
-        public IActionResult GetUser()
+        [HttpGet("{id}")]
+        public IActionResult GetUser(int id)
         {
               try
               {
-                User user = ReadToken();
+                ReadToken();
+
+                User user = _userRepository.GetUserById(id);
 
                 return Ok(new UserResponseDTO
                 {
                       Name = user.Name,
-                      Email = user.Email
+                      Email = user.Email,
+                      Status = user.Status
                 });
               }
               catch
@@ -74,26 +78,40 @@ namespace TryitterRD.Controllers
             try
             {
                 var getId = ReadToken();
-                
-                if (user.Email == null || getId == null) throw new Exception();
 
-                user.Password = MD5Crypt.GenerateHashMD5(user.Password);
-
-                User userToUpdate = new()
+                if (getId == null || user.Email != getId?.Email)
                 {
-                    Name = user.Name,
-                    Email = user.Email,
-                    Password = user.Password,
-                    Status = "online"
-                };
+                    return StatusCode(StatusCodes.Status400BadRequest, new ErrorResponseDTO()
+                    {
+                        Description = "Wrong Body or User unauthorized to update",
+                        Status = StatusCodes.Status400BadRequest
+                    });
+                }
 
-                _userRepository.Update(userToUpdate, getId.UserId);
+                
+                User userToUpdate = _userRepository.GetUserById(getId.UserId);
+
+                if(userToUpdate == null)
+                {
+                    return StatusCode(StatusCodes.Status404NotFound, new ErrorResponseDTO()
+                    {
+                        Description = "User not found",
+                        Status = StatusCodes.Status404NotFound
+                    });
+                }
+
+                userToUpdate.Email = user.Email;
+                userToUpdate.Name = user.Name;
+                userToUpdate.Status = user.Status;
+
+
+                User userUpdated = _userRepository.Update(userToUpdate);
 
                 return Ok(new UserResponseDTO
                 {
-                    Name = userToUpdate.Name,
-                    Email = userToUpdate.Email,
-                    Status = "Usuario alterado",
+                    Name = userUpdated.Name,
+                    Email = userUpdated.Email,
+                    Status = userUpdated.Status
                 });
 
             }

@@ -12,7 +12,8 @@ namespace TryitterRD.Repository.Implementation
         {
             _context = context;
         }
-        void IPostRepository.Save(Post post)
+        
+        public void Save(Post post)
         {
             _context.Add(post);
             _context.SaveChanges();
@@ -23,7 +24,7 @@ namespace TryitterRD.Repository.Implementation
             return _context.Posts.FirstOrDefault(post => post.PostId == postId);
         }
 
-        void IPostRepository.Delete(int id)
+        public void Delete(int id)
         {
             var postToDelete = _context.Posts.FirstOrDefault(postData => postData.UserId == id);
             
@@ -33,7 +34,7 @@ namespace TryitterRD.Repository.Implementation
             _context.SaveChanges();
         }
 
-        void IPostRepository.Update(Post post)
+        public void Update(Post post)
         {
             _context.Posts.Update(post);
             _context.SaveChanges();

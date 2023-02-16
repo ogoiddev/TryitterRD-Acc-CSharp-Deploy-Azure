@@ -60,7 +60,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9zaWQiOiI2IiwibmFtZSI6InN0cmluZyIsIm5iZiI6MTY3NjMzNzQ0MywiZXhwIjoxNjc2MzQxMDQzLCJpYXQiOjE2NzYzMzc0NDN9.ROS3o_5vh1z1ObJswYPXchWtcypTWBBdDwMcPSx1D1M",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9zaWQiOiIyIiwibmFtZSI6Im5ldyIsIm5iZiI6MTY3NjUyMzkzMywiZXhwIjoxNjc2NTI3NTMzLCJpYXQiOjE2NzY1MjM5MzN9.6OcVE-SPB3jYYkxZKvVt7uH7uQOPY2R-mQUzYfYEZ6w",
 							"type": "string"
 						}
 					]
@@ -69,7 +69,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"Diogo\",\r\n    \"email\": \"string@gg.com\",\r\n    \"password\": \"string\",\r\n    \"status\": \"Usuario alterado\"\r\n}",
+					"raw": "{\r\n    \"name\": \"new2\",\r\n    \"email\": \"new2@gmail.com\",\r\n    \"status\": \"offline\",\r\n    \"password\": \"123456\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -99,7 +99,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9zaWQiOiI4IiwibmFtZSI6IkRpb2dvIiwibmJmIjoxNjc2NTEwMzA5LCJleHAiOjE2NzY1MTM5MDksImlhdCI6MTY3NjUxMDMwOX0.LPZ8WbTAiOR9k15Mzq_GX3B0-G3HOeXrPB_wLIH8-e0",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9zaWQiOiI5IiwibmFtZSI6IkRpb2dvIiwibmJmIjoxNjc2NTEzMDcyLCJleHAiOjE2NzY1MTY2NzIsImlhdCI6MTY3NjUxMzA3Mn0.f7mGvxzLV2u8L53LD-Qowjom7Yp0dOQWNMMQ3qPvXmo",
 							"type": "string"
 						}
 					]
@@ -108,7 +108,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"title\": \"string\",\r\n  \"content\": \"string\",\r\n  \"User\": {\r\n    \"name\": \"Diogo\",\r\n    \"email\": \"ogoiddev@gmail.com\",\r\n    \"password\": \"123456\"\r\n}\r\n}",
+					"raw": "{\r\n  \"title\": \"dffaasdfas\",\r\n  \"content\": \"strfasfdasdfasdfsafing\",\r\n  \"User\": {\r\n    \"name\": \"Andre\",\r\n    \"email\": \"andre@gmail.com\",\r\n    \"password\": \"123456\"\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -174,7 +174,7 @@
 			"response": []
 		},
 		{
-			"name": "Update Post",
+			"name": "Update Post By Id",
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -213,10 +213,40 @@
 			"response": []
 		},
 		{
-			"name": "Get User By Token",
+			"name": "Get User By Id",
 			"request": {
 				"method": "GET",
 				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Delete User By Token",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9zaWQiOiIzIiwibmFtZSI6IkFuZHJlIiwibmJmIjoxNjc2NTE2NTM5LCJleHAiOjE2NzY1MjAxMzksImlhdCI6MTY3NjUxNjUzOX0.MhtEb9Vkc-Dgc8nM6-5JQstu8GNJuftQHsgOSwKJNqY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7144/api/User",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7144",
+					"path": [
+						"api",
+						"User"
+					]
+				}
 			},
 			"response": []
 		}

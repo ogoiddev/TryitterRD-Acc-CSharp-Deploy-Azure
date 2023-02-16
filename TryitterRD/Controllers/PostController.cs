@@ -2,10 +2,10 @@
 using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using TryitterRD.Dtos;
-using TryitterRD.Interfaces;
 using TryitterRD.Model;
 using TryitterRD.Repository;
 using System.Security.Claims;
+using TryitterRD.Interfaces;
 
 namespace TryitterRD.Controllers
 {
@@ -73,7 +73,7 @@ namespace TryitterRD.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetPost(int id)
+        public IActionResult GetPostById(int id)
         {
             var post = _postRepository.GetPostById(id);
 
@@ -89,8 +89,8 @@ namespace TryitterRD.Controllers
             return Ok(post);
         }
 
-        [HttpPut]
-        public IActionResult UpdatePost([FromBody] Post post)
+        [HttpPut("{id}")]
+        public IActionResult UpdatePost([FromBody] Post post, int id)
         {
             var userChecked = ReadToken();
 
@@ -104,7 +104,7 @@ namespace TryitterRD.Controllers
                 });
             }
 
-            var postToUpdate = _postRepository.GetPostById(userChecked.UserId);
+            var postToUpdate = _postRepository.GetPostById(id);
 
             if (postToUpdate == null)
             {
@@ -138,6 +138,50 @@ namespace TryitterRD.Controllers
             var json = JsonSerializer.Serialize(postToUpdate, options);
 
             return Ok(json.ToString());
+
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeletePost(int id)
+        {
+            try
+            {
+
+            var checkId = ReadToken();
+
+            if(checkId == null)
+            {
+                return BadRequest(new ErrorResponseDTO()
+                {
+                    Description = "User wrong or Body wrong params",
+                    Status = StatusCodes.Status400BadRequest
+                });
+            }
+
+            Post post = _postRepository.GetPostById(id);
+
+            if (checkId.UserId != post?.UserId)
+            {
+                return Unauthorized(new ErrorResponseDTO()
+                {
+                    Description = "User unauthorized to update this post",
+                    Status = StatusCodes.Status401Unauthorized
+                });
+            }
+
+            _postRepository.Delete(id);
+
+            return Ok("User Deleted");
+
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status404NotFound, new ErrorResponseDTO()
+                {
+                    Description = "Ocorreu um erro ao deletar",
+                    Status = StatusCodes.Status404NotFound
+                });
+            }
 
         }
     }

@@ -6,6 +6,7 @@ using TryitterRD.Utils;
 using TryitterRD.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace TryitterRD.Controllers
 {
@@ -30,21 +31,16 @@ namespace TryitterRD.Controllers
                     User user = _userRepository.GetUserByLoginDTO(loginRequest.Email, MD5Crypt.GenerateHashMD5(loginRequest.Password));
                     if (user != null)
                     {
-                        User userStatus = new() 
-                        { 
-                            Name = user.Name, 
-                            Email = user.Email,
-                            Password = user.Password,
-                            Status = "online" 
-                        };
+                        user.Status = "online";
 
-                        _userRepository.Update(userStatus, user.UserId);
+                        _userRepository.Update(user);
 
 
                         return Ok(new LoginResponseDTO()
                         {
                             Email = user.Email,
                             Name = user.Name,
+                            Status = user.Status,
                             Token = TokenService.GenerateToken(user)
                         });
 

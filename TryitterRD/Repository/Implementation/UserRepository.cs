@@ -42,18 +42,13 @@ namespace TryitterRD.Repository.Implementation
             _context.SaveChanges();
         }
 
-        public void Update(User user, int id)
+        public User Update(User userToUpdate)
         {
-            var userToUpdate = _context.Users.FirstOrDefault(userData => userData.UserId == id);
-
             if (userToUpdate == null) throw new Exception();
 
-            userToUpdate.Name = user.Name;
-            userToUpdate.Email = user.Email;
-            userToUpdate.Password = user.Password;
-            userToUpdate.Status = user.Status;
-
             _context.SaveChanges();
+
+            return userToUpdate;
         }
     }
 }
