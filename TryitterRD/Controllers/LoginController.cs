@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace TryitterRD.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("Login")]
     public class LoginController : BaseController
     {
         public LoginController(IUserRepository userRepository) : base(userRepository)

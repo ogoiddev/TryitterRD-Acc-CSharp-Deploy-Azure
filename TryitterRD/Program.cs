@@ -8,6 +8,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Text.Json;
+using TryitterRD.Controllers;
+using TryitterRD.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
@@ -23,6 +25,8 @@ builder.Services.AddDbContext<TryitterRDContext>(option => option.UseSqlServer(c
 
 builder.Services.AddScoped<IPostRepository, PostRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IPostController, PostController>();
+
 
 builder.Services.AddControllers().AddJsonOptions(options =>
 {
@@ -47,6 +51,7 @@ builder.Services.AddAuthentication(auth =>
     ValidateAudience = false,
   };
 });
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
